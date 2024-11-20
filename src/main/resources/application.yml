@@ -2,6 +2,7 @@ spring:
   docker:
     compose:
       file: compose.yml
+      lifecycle-management: start_and_stop
 
   kafka:
     bootstrap-servers: localhost:9092
