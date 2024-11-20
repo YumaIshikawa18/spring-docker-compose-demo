@@ -17,7 +17,6 @@ public class Hero {
     private int experience;
 
     public Hero() {
-
     }
 
     public Hero(String name) {

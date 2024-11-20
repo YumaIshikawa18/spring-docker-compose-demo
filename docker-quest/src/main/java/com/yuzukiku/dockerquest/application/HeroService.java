@@ -22,7 +22,7 @@ public class HeroService {
     public Hero getHero(Integer id) {
         return heroRepository.findById(id)
                 .orElseGet(() ->  {
-                    Hero newHero = new Hero("勇者");
+                    Hero newHero = new Hero("Arus"); // DQ3 Main Character
                     heroRepository.save(newHero);
                     logger.debug("New hero created with name: {}", newHero.getName());
                     return newHero;
@@ -31,7 +31,11 @@ public class HeroService {
 
     public void heroDefeatedMonster(Hero hero, int experiencePoints) {
         hero.gainExperience(experiencePoints);
-        logger.debug("Hero defeated with ExperiencePoints: {}", experiencePoints);
+        int requiredExperience = calculateRequiredExperience(hero.getLevel());
+        int remainingExperience = requiredExperience - hero.getExperience();
+
+        logger.debug("Hero defeated a monster! Gained ExperiencePoints: {}. Total Experience: {}. Remaining Experience for next level: {}",
+                experiencePoints, hero.getExperience(), Math.max(remainingExperience, 0));
 
         levelUpHero(hero);
         heroRepository.save(hero);
@@ -39,12 +43,11 @@ public class HeroService {
 
     private void levelUpHero(Hero hero) {
         int requiredExperience = calculateRequiredExperience(hero.getLevel());
-        // 累積経験値が現在のレベルの必要経験値を超えている場合
+
         while (hero.getExperience() >= requiredExperience) {
-            hero.setLevel(hero.getLevel() + 1); // レベルアップ
+            hero.setLevel(hero.getLevel() + 1);
             logger.debug("Level up! Current level: {}", hero.getLevel());
 
-            // 次のレベルの必要経験値を再計算
             requiredExperience = calculateRequiredExperience(hero.getLevel());
         }
     }

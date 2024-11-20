@@ -28,7 +28,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+#    show-sql: true #SQL クエリ確認用
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -36,9 +36,8 @@ spring:
 
 logging:
   level:
-    root: info
-    org.springframework.kafka: debug
-    com.yuzukiku.dockerquest: debug
+#    org.springframework.kafka: debug　# Kafka確認用
+    com.yuzukiku.dockerquest: debug # logger
 
 management:
   endpoints:
